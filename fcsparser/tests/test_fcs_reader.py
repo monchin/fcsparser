@@ -28,6 +28,8 @@ FILE_IDENTIFIER_TO_PATH = {
                                      'FCS_3.0_Fortessa_PBS_Specimen_001_A1_A01.fcs'),
     'large fake fcs': os.path.join(BASE_PATH, 'fake_large_fcs', 'fake_large_fcs.fcs'),
     'cyflow cube 8': os.path.join(BASE_PATH, 'cyflow_cube_8', 'cyflow_cube_8.fcs'),
+    'text end equals data start fcs': os.path.join(BASE_PATH, \
+        'text_end_equals_data_start', 'HEA4_profile#validation_panel_raw.fcs')
 }
 
 # The group of files below is used for checking behavior other than reading data.
@@ -211,6 +213,11 @@ class TestFCSReader(unittest.TestCase):
     def test_mq_FCS_3_1_data_segment(self):
         """Test DATA segment parsed from FCS (3.1 format) file from a MACSQuant flow cytometer"""
         fname = FILE_IDENTIFIER_TO_PATH['mq fcs 3.1']
+        meta, df = parse_fcs(fname)
+
+    def test_equal_fcs_segment(self):
+        """Test DATA segment parsed when 'text_end' equals 'data_start'"""
+        fname = FILE_IDENTIFIER_TO_PATH['text end equals data start fcs']
         meta, df = parse_fcs(fname)
 
     def test_fcs_reader_API(self):
